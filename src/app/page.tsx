@@ -3,6 +3,8 @@ import { Footer } from "@/components/layout/Footer";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { AboutSection } from "@/components/sections/AboutSection";
+import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
+import { CtaBannerSection } from "@/components/sections/CtaBannerSection";
 import { FaqSection } from "@/components/sections/FaqSection";
 import { ContactSection } from "@/components/sections/ContactSection";
 import { InfiniteTicker } from "@/components/ui/InfiniteTicker";
@@ -32,6 +34,8 @@ export default function Home() {
       <InfiniteTicker items={tickerItems} speed={30} />
       <ServicesSection />
       <AboutSection />
+      <TestimonialsSection />
+      <CtaBannerSection />
       <FaqSection />
       <ContactSection />
       <Footer />
