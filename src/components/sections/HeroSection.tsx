@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 const heroStats = [
-  { value: "24/7", label: "NOTDIENST" },
   { value: "5+", label: "LEISTUNGEN" },
   { value: "100%", label: "QUALITÄT" },
+  { value: "Persönlich", label: "VOR ORT" },
 ];
 
 export function HeroSection() {
@@ -80,7 +80,7 @@ export function HeroSection() {
 
         {/* Subtext */}
         <p style={{ fontSize: "clamp(16px,1.6vw,19px)", color: "rgba(245,245,247,0.65)", maxWidth: 520, lineHeight: 1.6, margin: "0 0 40px 0", fontWeight: 400 }}>
-          Von kleinen Reparaturen bis zu kompletten Installationen — ich erledige fast alles für Ihr Zuhause oder Unternehmen, inkl. schnellem Notdienst.
+          Von kleinen Reparaturen bis zu kompletten Installationen — ich erledige fast alles für Ihr Zuhause oder Unternehmen, schnell, sauber und zuverlässig.
         </p>
 
         {/* Buttons */}

@@ -6,7 +6,7 @@ import Image from "next/image";
 const stats = [
   { value: "5+", label: "Leistungsbereiche" },
   { value: "100%", label: "Qualitätsgarantie" },
-  { value: "24/7", label: "Notdienst" },
+  { value: "Schnell", label: "Reaktionszeit" },
   { value: "Persönlich", label: "Vor-Ort-Beratung" },
 ];
 
@@ -69,8 +69,8 @@ export function AboutSection() {
             boxShadow: "0 20px 50px rgba(0,0,0,0.4)",
             animation: "floatY 4s ease-in-out infinite",
           }}>
-            <div style={{ fontSize: 26, fontWeight: 800, letterSpacing: "-1px" }}>24/7</div>
-            <div style={{ fontSize: 10, letterSpacing: "1.5px", fontWeight: 700 }}>ERREICHBAR</div>
+            <div style={{ fontSize: 26, fontWeight: 800, letterSpacing: "-1px" }}>TOP</div>
+            <div style={{ fontSize: 10, letterSpacing: "1.5px", fontWeight: 700 }}>QUALITÄT</div>
           </div>
         </div>
 

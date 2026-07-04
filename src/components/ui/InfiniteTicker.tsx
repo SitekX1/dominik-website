@@ -4,7 +4,6 @@ const marqueeItems = [
   "Netzwerkverlegung",
   "Silikonarbeiten",
   "3D-Modelle",
-  "24/7 Notdienst",
   "Kostenlose Beratung",
 ];
 
