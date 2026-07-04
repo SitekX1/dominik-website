@@ -1,10 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
-import { Menu, X, Phone, ArrowRight } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 
 const navLinks = [
   { label: "HOME", href: "#" },
@@ -18,33 +16,89 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
-    window.addEventListener("scroll", onScroll);
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
-    <motion.header
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
-      animate={{
-        backgroundColor: scrolled ? "rgba(24,10,5,0.95)" : "rgba(24,10,5,0.0)",
-        backdropFilter: scrolled ? "blur(16px)" : "blur(0px)",
-        borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "1px solid transparent",
+    <header
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 50,
+        transition: "background 0.4s ease, backdrop-filter 0.4s ease, padding 0.4s ease, border-color 0.4s ease",
+        background: scrolled ? "rgba(8,8,10,0.85)" : "rgba(8,8,10,0)",
+        backdropFilter: scrolled ? "blur(20px)" : "blur(0px)",
+        WebkitBackdropFilter: scrolled ? "blur(20px)" : "blur(0px)",
+        borderBottom: scrolled
+          ? "1px solid rgba(245,245,247,0.08)"
+          : "1px solid transparent",
       }}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            transition: "height 0.4s ease",
+            height: scrolled ? "60px" : "76px",
+          }}
+        >
           {/* Logo */}
-          <Link href="/" className="flex items-center">
-            <Image
-              src="/logo.png"
-              alt="LELO Logo"
-              width={110}
-              height={44}
-              className="h-10 w-auto object-contain brightness-0 invert"
-              priority
-            />
+          <Link href="/" className="flex items-center gap-3 group">
+            <div
+              style={{
+                width: 36,
+                height: 36,
+                background: "linear-gradient(135deg, #ff9a52, #e8672a)",
+                borderRadius: 8,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
+              }}
+            >
+              <span
+                style={{
+                  color: "#fff",
+                  fontWeight: 900,
+                  fontSize: 18,
+                  lineHeight: 1,
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                L
+              </span>
+            </div>
+            <div>
+              <span
+                style={{
+                  display: "block",
+                  color: "#f5f5f7",
+                  fontWeight: 800,
+                  fontSize: 14,
+                  letterSpacing: "0.06em",
+                  lineHeight: 1.1,
+                }}
+              >
+                LELO
+              </span>
+              <span
+                style={{
+                  display: "block",
+                  color: "rgba(245,245,247,0.45)",
+                  fontWeight: 500,
+                  fontSize: 10,
+                  letterSpacing: "0.08em",
+                }}
+              >
+                DOMINIK LENZ
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Nav */}
@@ -53,67 +107,135 @@ export function Header() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-white/70 hover:text-white font-semibold text-xs tracking-widest transition-colors"
+                style={{
+                  color: "rgba(245,245,247,0.6)",
+                  fontWeight: 600,
+                  fontSize: 11,
+                  letterSpacing: "0.12em",
+                  textDecoration: "none",
+                  transition: "color 0.2s",
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.color = "#f5f5f7")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.color = "rgba(245,245,247,0.6)")
+                }
               >
                 {link.label}
               </a>
             ))}
           </nav>
 
-          {/* CTA */}
+          {/* CTA + Hamburger */}
           <div className="flex items-center gap-3">
             <a
               href="tel:+491791611556"
-              className="hidden sm:flex items-center gap-2.5 bg-[#D4A017] hover:bg-[#B8880D] text-[#180A05] px-5 py-2.5 rounded-sm font-bold text-xs tracking-widest transition-colors"
+              className="hidden sm:flex items-center gap-2 animate-pulse-cta"
+              style={{
+                background: "linear-gradient(135deg, #ff9a52, #e8672a)",
+                color: "#fff",
+                padding: "10px 20px",
+                borderRadius: 100,
+                fontWeight: 700,
+                fontSize: 11,
+                letterSpacing: "0.1em",
+                textDecoration: "none",
+                transition: "opacity 0.2s, transform 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.opacity = "0.9";
+                e.currentTarget.style.transform = "scale(1.03)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.opacity = "1";
+                e.currentTarget.style.transform = "scale(1)";
+              }}
             >
-              <ArrowRight size={14} />
+              <Phone size={12} />
               ANRUFEN
             </a>
+
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="md:hidden p-2 text-white"
+              className="md:hidden"
+              style={{
+                background: "rgba(245,245,247,0.06)",
+                border: "1px solid rgba(245,245,247,0.1)",
+                borderRadius: 8,
+                padding: "8px",
+                color: "#f5f5f7",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              aria-label="Menü"
             >
-              {menuOpen ? <X size={22} /> : <Menu size={22} />}
+              {menuOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
           </div>
         </div>
       </div>
 
       {/* Mobile Menu */}
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden bg-[#180A05] border-t border-white/10 overflow-hidden"
+      <div
+        style={{
+          overflow: "hidden",
+          maxHeight: menuOpen ? "400px" : "0",
+          transition: "max-height 0.35s ease",
+          background: "rgba(8,8,10,0.97)",
+          backdropFilter: "blur(20px)",
+          borderTop: menuOpen
+            ? "1px solid rgba(245,245,247,0.08)"
+            : "1px solid transparent",
+        }}
+        className="md:hidden"
+      >
+        <div className="px-6 py-6 flex flex-col gap-1">
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={() => setMenuOpen(false)}
+              style={{
+                display: "block",
+                padding: "14px 0",
+                color: "rgba(245,245,247,0.65)",
+                fontWeight: 600,
+                fontSize: 11,
+                letterSpacing: "0.12em",
+                textDecoration: "none",
+                borderBottom: "1px solid rgba(245,245,247,0.06)",
+                transition: "color 0.2s",
+              }}
+            >
+              {link.label}
+            </a>
+          ))}
+          <a
+            href="tel:+491791611556"
+            style={{
+              marginTop: 16,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 8,
+              background: "linear-gradient(135deg, #ff9a52, #e8672a)",
+              color: "#fff",
+              padding: "14px 24px",
+              borderRadius: 100,
+              fontWeight: 700,
+              fontSize: 11,
+              letterSpacing: "0.1em",
+              textDecoration: "none",
+            }}
           >
-            <div className="px-6 py-5 flex flex-col gap-1">
-              {navLinks.map((link, i) => (
-                <motion.a
-                  key={link.href}
-                  href={link.href}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.06 }}
-                  onClick={() => setMenuOpen(false)}
-                  className="py-3 text-white/70 hover:text-white font-bold text-xs tracking-widest border-b border-white/5 last:border-0"
-                >
-                  {link.label}
-                </motion.a>
-              ))}
-              <a
-                href="tel:+491791611556"
-                className="mt-4 flex items-center justify-center gap-2 bg-[#D4A017] text-[#180A05] px-5 py-3.5 font-bold text-xs tracking-widest"
-              >
-                <Phone size={14} />
-                +49 179 1611556
-              </a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.header>
+            <Phone size={13} />
+            +49 179 1611556
+          </a>
+        </div>
+      </div>
+    </header>
   );
 }

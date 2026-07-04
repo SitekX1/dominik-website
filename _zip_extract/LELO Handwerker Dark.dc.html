@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #08080a; }
+  @keyframes marqueeScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes floatY { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  @keyframes softPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(255,138,61,0.35); } 50% { box-shadow: 0 0 0 10px rgba(255,138,61,0); } }
+  ::selection { background: #ff8a3d; color: #0a0a0b; }
+</style>
+</helmet>
+
+<div style="font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; background:#08080a; color:#f5f5f7; overflow-x:hidden; width:100%;">
+
+  <!-- HEADER -->
+  <header style="position:fixed; top:0; left:0; right:0; z-index:200; display:flex; align-items:center; justify-content:space-between; padding:{{ headerPadding }}; background:{{ headerBg }}; backdrop-filter:{{ headerBlur }}; -webkit-backdrop-filter:{{ headerBlur }}; border-bottom:1px solid {{ headerBorder }}; transition:all 0.4s cubic-bezier(0.22,1,0.36,1);">
+    <div style="display:flex; align-items:center; gap:10px; cursor:pointer;" onClick="{{ scrollToTop }}">
+      <div style="width:38px; height:38px; border-radius:10px; background:linear-gradient(145deg,#ff9a52,#e8672a); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:15px; color:#0a0a0b; letter-spacing:-0.5px;">L</div>
+      <div style="display:flex; flex-direction:column; line-height:1.05;">
+        <span style="font-weight:800; font-size:16px; letter-spacing:0.5px; color:#f5f5f7;">LELO</span>
+        <span style="font-size:10px; letter-spacing:1.5px; color:rgba(245,245,247,0.45); font-weight:500;">DOMINIK LENZ</span>
+      </div>
+    </div>
+
+    <nav style="display:flex; align-items:center; gap:36px;">
+      <a href="#top" onClick="{{ scrollToTop }}" style="color:rgba(245,245,247,0.85); text-decoration:none; font-size:14px; font-weight:500; letter-spacing:0.3px; padding-bottom:4px; border-bottom:1px solid transparent; transition:all 0.25s ease;" style-hover="color:#ffffff; border-bottom:1px solid #ff8a3d;">HOME</a>
+      <a href="#ueber-mich" style="color:rgba(245,245,247,0.85); text-decoration:none; font-size:14px; font-weight:500; letter-spacing:0.3px; padding-bottom:4px; border-bottom:1px solid transparent; transition:all 0.25s ease;" style-hover="color:#ffffff; border-bottom:1px solid #ff8a3d;">ÜBER MICH</a>
+      <a href="#leistungen" style="color:rgba(245,245,247,0.85); text-decoration:none; font-size:14px; font-weight:500; letter-spacing:0.3px; padding-bottom:4px; border-bottom:1px solid transparent; transition:all 0.25s ease;" style-hover="color:#ffffff; border-bottom:1px solid #ff8a3d;">LEISTUNGEN</a>
+      <a href="#kontakt" style="color:rgba(245,245,247,0.85); text-decoration:none; font-size:14px; font-weight:500; letter-spacing:0.3px; padding-bottom:4px; border-bottom:1px solid transparent; transition:all 0.25s ease;" style-hover="color:#ffffff; border-bottom:1px solid #ff8a3d;">KONTAKT</a>
+    </nav>
+
+    <a href="tel:+491791611556" style="display:flex; align-items:center; gap:8px; background:#ff8a3d; color:#0a0a0b; text-decoration:none; font-weight:700; font-size:13px; letter-spacing:0.5px; padding:11px 22px; border-radius:100px; transition:all 0.25s ease; animation:softPulse 2.8s ease-in-out infinite;" style-hover="background:#ffffff; transform:translateY(-2px);">ANRUFEN</a>
+  </header>
+
+  <!-- HERO -->
+  <section id="top" data-screen-label="Hero" style="position:relative; min-height:100vh; display:flex; flex-direction:column; justify-content:center; padding:0 clamp(24px,6vw,90px); overflow:hidden;">
+    <div style="position:absolute; inset:0; z-index:0; transform:{{ heroParallax }};">
+      <img src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&w=1600&q=85" alt="Professioneller Handwerker" style="width:100%; height:112%; object-fit:cover; filter:grayscale(35%) brightness(0.55);" />
+      <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(8,8,10,0.55) 0%, rgba(8,8,10,0.75) 55%, #08080a 100%);"></div>
+    </div>
+
+    <div style="position:relative; z-index:1; max-width:900px; padding-top:120px; opacity:{{ heroVisible }}; transform:{{ heroTransform }}; transition:opacity 1s cubic-bezier(0.22,1,0.36,1), transform 1s cubic-bezier(0.22,1,0.36,1);">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:22px;">
+        <span style="width:8px; height:8px; border-radius:50%; background:#ff8a3d; animation:floatY 2s ease-in-out infinite;"></span>
+        <span style="font-size:13px; letter-spacing:2px; color:rgba(245,245,247,0.6); font-weight:600; text-transform:uppercase;">Ihr Handwerker vor Ort — Huisheim &amp; Umgebung</span>
+      </div>
+      <h1 style="font-size:clamp(42px,7vw,92px); font-weight:800; line-height:1.02; letter-spacing:-2.5px; margin:0 0 26px 0; color:#f5f5f7;">SMARTER<br/>HANDWERKER<br/><span style="background:linear-gradient(90deg,#ff9a52,#ff5f2e); -webkit-background-clip:text; background-clip:text; color:transparent;">VOR ORT!</span></h1>
+      <p style="font-size:clamp(16px,1.6vw,19px); color:rgba(245,245,247,0.65); max-width:520px; line-height:1.6; margin:0 0 40px 0; font-weight:400;">Von kleinen Reparaturen bis zu kompletten Installationen — ich erledige fast alles für Ihr Zuhause oder Unternehmen, inkl. schnellem Notdienst.</p>
+
+      <div style="display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-bottom:64px;">
+        <a href="tel:+491791611556" style="background:#ff8a3d; color:#0a0a0b; text-decoration:none; font-weight:700; font-size:15px; padding:17px 32px; border-radius:100px; transition:all 0.3s cubic-bezier(0.22,1,0.36,1); display:inline-block;" style-hover="background:#ffffff; transform:translateY(-3px) scale(1.02); box-shadow:0 12px 30px rgba(255,138,61,0.25);">JETZT ANRUFEN</a>
+        <a href="#leistungen" style="border:1px solid rgba(245,245,247,0.25); color:#f5f5f7; text-decoration:none; font-weight:600; font-size:15px; padding:17px 32px; border-radius:100px; transition:all 0.3s ease; display:inline-block;" style-hover="border-color:#f5f5f7; background:rgba(245,245,247,0.08);">LEISTUNGEN</a>
+      </div>
+
+      <div style="display:flex; gap:0; flex-wrap:wrap;">
+        <sc-for list="{{ heroStats }}" as="stat" hint-placeholder-count="3">
+          <div style="padding:0 36px 0 0; margin-right:36px; border-right:1px solid rgba(245,245,247,0.12);">
+            <div style="font-size:28px; font-weight:800; color:#f5f5f7; letter-spacing:-1px;">{{ stat.value }}</div>
+            <div style="font-size:11px; letter-spacing:1.5px; color:rgba(245,245,247,0.45); font-weight:600; margin-top:4px;">{{ stat.label }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div style="position:relative; background:#111113; border-top:1px solid rgba(245,245,247,0.08); border-bottom:1px solid rgba(245,245,247,0.08); padding:22px 0; overflow:hidden; white-space:nowrap;">
+    <div style="display:inline-flex; animation:marqueeScroll 32s linear infinite;">
+      <sc-for list="{{ marqueeDouble }}" as="m" hint-placeholder-count="16">
+        <span style="display:inline-flex; align-items:center; font-size:15px; font-weight:600; letter-spacing:0.5px; color:rgba(245,245,247,0.55); padding:0 28px;">{{ m }} <span style="color:#ff8a3d; margin-left:28px;">•</span></span>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="leistungen" data-screen-label="Leistungen" style="padding:140px clamp(24px,6vw,90px); max-width:1400px; margin:0 auto;">
+    <div style="opacity:{{ servicesHeaderOpacity }}; transform:{{ servicesHeaderTransform }}; transition:opacity 0.2s linear, transform 0.2s linear; margin-bottom:64px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:18px;">
+        <span style="width:24px; height:1px; background:#ff8a3d;"></span>
+        <span style="font-size:13px; letter-spacing:2px; color:#ff8a3d; font-weight:700; text-transform:uppercase;">Was ich anbiete</span>
+      </div>
+      <h2 style="font-size:clamp(30px,4.5vw,54px); font-weight:800; letter-spacing:-1.5px; line-height:1.1; margin:0 0 16px 0; max-width:780px;">KÄMPFEN SIE MIT HEIMWERKSPROBLEMEN?</h2>
+      <p style="font-size:18px; color:rgba(245,245,247,0.55); margin:0;">Ich bin sofort für Sie da!</p>
+    </div>
+
+    <div id="services-anchor" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:22px;">
+      <sc-for list="{{ services }}" as="svc" hint-placeholder-count="5">
+        <div style="position:relative; border-radius:20px; overflow:hidden; aspect-ratio:3/4; cursor:pointer; opacity:{{ svc.opacity }}; transform:{{ svc.cardTransform }}; transition:opacity 0.2s linear, transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease;" style-hover="transform:translateY(-12px) rotate(-0.6deg) scale(1.02); box-shadow:0 26px 55px rgba(0,0,0,0.5);">
+          <img src="{{ svc.img }}" alt="{{ svc.title }}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.65) grayscale(20%); transition:transform 0.6s cubic-bezier(0.22,1,0.36,1), filter 0.6s ease;" style-hover="transform:scale(1.1); filter:brightness(0.85) grayscale(0%);" />
+          <div style="position:absolute; inset:0; background:linear-gradient(180deg, transparent 40%, rgba(8,8,10,0.9) 100%);"></div>
+          <div style="position:absolute; bottom:22px; left:22px; right:22px;">
+            <div style="width:34px; height:2px; background:#ff8a3d; margin-bottom:12px; transition:width 0.3s ease;"></div>
+            <div style="font-size:16px; font-weight:700; letter-spacing:0.3px; color:#f5f5f7;">{{ svc.title }}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="ueber-mich" data-screen-label="Ueber mich" style="padding:0 clamp(24px,6vw,90px) 140px; max-width:1400px; margin:0 auto; display:grid; grid-template-columns:minmax(280px,420px) 1fr; gap:80px; align-items:center;">
+    <div style="position:relative; opacity:{{ aboutImgOpacity }}; transform:{{ aboutImgTransform }}; transition:opacity 0.2s linear, transform 0.2s linear;">
+      <div style="border-radius:24px; overflow:hidden; aspect-ratio:4/5;">
+        <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80" alt="Dominik Lenz — LELO" style="width:100%; height:100%; object-fit:cover; filter:grayscale(25%) brightness(0.85);" />
+      </div>
+      <div style="position:absolute; bottom:-24px; right:-24px; background:#ff8a3d; color:#0a0a0b; border-radius:18px; padding:20px 24px; text-align:center; box-shadow:0 20px 50px rgba(0,0,0,0.4); animation:floatY 4s ease-in-out infinite;">
+        <div style="font-size:26px; font-weight:800; letter-spacing:-1px;">24/7</div>
+        <div style="font-size:10px; letter-spacing:1.5px; font-weight:700;">ERREICHBAR</div>
+      </div>
+    </div>
+
+    <div style="opacity:{{ aboutTextOpacity }}; transform:{{ aboutTextTransform }}; transition:opacity 0.2s linear, transform 0.2s linear;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:18px;">
+        <span style="width:24px; height:1px; background:#ff8a3d;"></span>
+        <span style="font-size:13px; letter-spacing:2px; color:#ff8a3d; font-weight:700; text-transform:uppercase;">Über mich</span>
+      </div>
+      <h2 style="font-size:clamp(28px,3.8vw,44px); font-weight:800; letter-spacing:-1.2px; line-height:1.15; margin:0 0 20px 0;">ZUVERLÄSSIGE HANDWERKSLÖSUNGEN FÜR ZUHAUSE</h2>
+      <p style="font-size:17px; color:rgba(245,245,247,0.85); line-height:1.6; margin:0 0 16px 0; font-weight:500;">Zuverlässige Reparaturen. Professioneller Service. Vertrauensvolle Ergebnisse — jedes Mal.</p>
+      <p style="font-size:16px; color:rgba(245,245,247,0.55); line-height:1.7; margin:0 0 44px 0;">Ich biete zuverlässige Handwerks- und Wartungsleistungen, die dafür sorgen, dass Ihre Immobilie sicher, funktionsfähig und in bestem Zustand bleibt. Von kleinen Reparaturen bis zu kompletten Installationen — mit Sorgfalt und Aufmerksamkeit für jedes Detail.</p>
+
+      <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:28px; margin-bottom:44px;">
+        <sc-for list="{{ aboutStats }}" as="stat" hint-placeholder-count="4">
+          <div>
+            <div style="font-size:30px; font-weight:800; color:#ff8a3d; letter-spacing:-1px;">{{ stat.value }}</div>
+            <div style="font-size:13px; color:rgba(245,245,247,0.5); margin-top:4px; font-weight:500;">{{ stat.label }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <a href="#kontakt" style="background:#f5f5f7; color:#0a0a0b; text-decoration:none; font-weight:700; font-size:14px; padding:16px 30px; border-radius:100px; display:inline-block; transition:all 0.3s ease;" style-hover="background:#ff8a3d; transform:translateY(-2px);">MEHR ÜBER MICH</a>
+    </div>
+  </section>
+
+  <!-- CTA / QUICK CONTACT -->
+  <section data-screen-label="CTA" style="padding:100px clamp(24px,6vw,90px) 140px; max-width:1400px; margin:0 auto; display:grid; grid-template-columns:1.1fr 0.9fr; gap:60px; align-items:center;">
+    <div style="opacity:{{ ctaTextOpacity }}; transform:{{ ctaTextTransform }}; transition:opacity 0.2s linear, transform 0.2s linear;">
+      <h2 style="font-size:clamp(28px,4vw,50px); font-weight:800; letter-spacing:-1.5px; line-height:1.12; margin:0 0 18px 0;">ZUVERLÄSSIGE HANDWERKSLEISTUNGEN VOM EXPERTEN HEUTE</h2>
+      <p style="font-size:17px; color:rgba(245,245,247,0.5); margin:0 0 40px 0; max-width:480px;">Zuverlässige Reparaturlösungen — schnell, sauber, professionell.</p>
+
+      <div style="display:flex; flex-direction:column; gap:16px; max-width:420px;">
+        <a href="tel:+491791611556" style="display:flex; align-items:center; justify-content:space-between; background:#ff8a3d; color:#0a0a0b; text-decoration:none; padding:18px 26px; border-radius:16px; transition:all 0.3s ease;" style-hover="transform:translateX(6px);">
+          <span style="font-weight:800; font-size:15px;">+49 179 1611556</span>
+          <span style="font-size:12px; font-weight:600; opacity:0.75;">Jetzt anrufen!</span>
+        </a>
+        <a href="mailto:lelo.kontakt@gmail.com" style="display:flex; align-items:center; justify-content:space-between; background:transparent; border:1px solid rgba(245,245,247,0.18); color:#f5f5f7; text-decoration:none; padding:18px 26px; border-radius:16px; transition:all 0.3s ease;" style-hover="border-color:#ff8a3d; transform:translateX(6px);">
+          <span style="font-weight:700; font-size:14px;">LELO.KONTAKT@GMAIL.COM</span>
+          <span style="font-size:12px; font-weight:600; opacity:0.6;">Business E-Mail</span>
+        </a>
+        <div style="font-size:13px; color:rgba(245,245,247,0.4); padding-left:6px; letter-spacing:0.3px;">GRÜNER WEG 14, 86685 HUISHEIM</div>
+      </div>
+    </div>
+
+    <div style="position:relative; opacity:{{ ctaImgOpacity }}; transform:{{ ctaImgTransform }}; transition:opacity 0.2s linear, transform 0.2s linear;">
+      <div style="border-radius:24px; overflow:hidden; aspect-ratio:1/1;">
+        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80" alt="Handwerker mit Werkzeug" style="width:100%; height:100%; object-fit:cover; filter:grayscale(30%) brightness(0.75);" />
+      </div>
+      <div style="position:absolute; top:20px; left:20px; background:rgba(8,8,10,0.7); backdrop-filter:blur(10px); border:1px solid rgba(245,245,247,0.15); border-radius:100px; padding:8px 18px; font-size:11px; letter-spacing:1.5px; font-weight:700; color:#f5f5f7;">LELO DOMINIK LENZ • JETZT ANFRAGEN</div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" data-screen-label="FAQ" style="padding:0 clamp(24px,6vw,90px) 140px; max-width:900px; margin:0 auto;">
+    <div id="faq-header" style="opacity:{{ faqHeaderOpacity }}; transform:{{ faqHeaderTransform }}; transition:opacity 0.2s linear, transform 0.2s linear; margin-bottom:56px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:18px;">
+        <span style="width:24px; height:1px; background:#ff8a3d;"></span>
+        <span style="font-size:13px; letter-spacing:2px; color:#ff8a3d; font-weight:700; text-transform:uppercase;">Häufige Fragen</span>
+      </div>
+      <h2 style="font-size:clamp(28px,4vw,46px); font-weight:800; letter-spacing:-1.5px; margin:0;">FRAGEN &amp; ANTWORTEN</h2>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <sc-for list="{{ faqs }}" as="faq" hint-placeholder-count="6">
+        <div style="border:1px solid rgba(245,245,247,0.1); border-radius:16px; background:#0e0e10; overflow:hidden; transition:border-color 0.3s ease, background 0.3s ease, transform 0.3s cubic-bezier(0.22,1,0.36,1); opacity:{{ faq.opacity }}; transform:{{ faq.wrapTransform }};" style-hover="border-color:rgba(255,138,61,0.45); background:#131315; transform:translateX(6px);">
+          <div onClick="{{ faq.toggle }}" style="display:flex; align-items:center; justify-content:space-between; padding:22px 26px; cursor:pointer;">
+            <span style="font-size:16px; font-weight:600; color:#f5f5f7; padding-right:20px; transition:color 0.25s ease;">{{ faq.q }}</span>
+            <span style="width:26px; height:26px; min-width:26px; border-radius:50%; border:1px solid rgba(245,245,247,0.25); display:flex; align-items:center; justify-content:center; font-size:16px; color:#ff8a3d; transform:{{ faq.iconRotate }}; transition:transform 0.35s cubic-bezier(0.22,1,0.36,1), border-color 0.25s ease;">+</span>
+          </div>
+          <div style="display:grid; grid-template-rows:{{ faq.rows }}; transition:grid-template-rows 0.4s cubic-bezier(0.22,1,0.36,1);">
+            <div style="overflow:hidden;">
+              <p style="margin:0; padding:0 26px 24px; font-size:15px; line-height:1.65; color:rgba(245,245,247,0.55);">{{ faq.a }}</p>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="kontakt" data-screen-label="Kontakt" style="padding:0 clamp(24px,6vw,90px) 160px; max-width:1400px; margin:0 auto;">
+    <div style="display:grid; grid-template-columns:1fr 0.8fr; gap:60px; position:relative;">
+      <div id="contact-form-card" style="opacity:{{ contactOpacity }}; background:#111113; border:1px solid rgba(245,245,247,0.08); border-radius:24px; padding:48px; transition:opacity 0.2s linear;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
+          <span style="width:24px; height:1px; background:#ff8a3d;"></span>
+          <span style="font-size:13px; letter-spacing:2px; color:#ff8a3d; font-weight:700; text-transform:uppercase;">Kontakt</span>
+        </div>
+        <h2 style="font-size:clamp(26px,3.4vw,38px); font-weight:800; letter-spacing:-1px; margin:0 0 10px 0;">PROJEKT ANFRAGEN</h2>
+        <p style="font-size:15px; color:rgba(245,245,247,0.5); margin:0 0 36px 0;">Schildern Sie Ihr Anliegen — ich melde mich schnellstmöglich.</p>
+
+        <sc-if value="{{ formSubmitted }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:40px; text-align:center; border:1px solid rgba(255,138,61,0.3); border-radius:16px; background:rgba(255,138,61,0.06);">
+            <div style="font-size:32px; margin-bottom:14px;">✓</div>
+            <div style="font-size:17px; font-weight:700; color:#f5f5f7; margin-bottom:8px;">Anfrage gesendet!</div>
+            <div style="font-size:14px; color:rgba(245,245,247,0.55);">Ich melde mich schnellstmöglich bei Ihnen.</div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ formNotSubmitted }}" hint-placeholder-val="{{ true }}">
+          <form onSubmit="{{ submitForm }}" style="display:flex; flex-direction:column; gap:18px;">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+              <div style="display:flex; flex-direction:column; gap:8px;">
+                <label style="font-size:12px; letter-spacing:0.5px; color:rgba(245,245,247,0.5); font-weight:600;">NAME *</label>
+                <input required="{{ true }}" type="text" style="background:#08080a; border:1px solid rgba(245,245,247,0.12); border-radius:10px; padding:13px 16px; color:#f5f5f7; font-size:14px; font-family:inherit; outline:none; transition:border-color 0.25s ease;" style-focus="border-color:#ff8a3d;" />
+              </div>
+              <div style="display:flex; flex-direction:column; gap:8px;">
+                <label style="font-size:12px; letter-spacing:0.5px; color:rgba(245,245,247,0.5); font-weight:600;">TELEFON</label>
+                <input type="text" style="background:#08080a; border:1px solid rgba(245,245,247,0.12); border-radius:10px; padding:13px 16px; color:#f5f5f7; font-size:14px; font-family:inherit; outline:none; transition:border-color 0.25s ease;" style-focus="border-color:#ff8a3d;" />
+              </div>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <label style="font-size:12px; letter-spacing:0.5px; color:rgba(245,245,247,0.5); font-weight:600;">E-MAIL *</label>
+              <input required="{{ true }}" type="email" style="background:#08080a; border:1px solid rgba(245,245,247,0.12); border-radius:10px; padding:13px 16px; color:#f5f5f7; font-size:14px; font-family:inherit; outline:none; transition:border-color 0.25s ease;" style-focus="border-color:#ff8a3d;" />
+            </div>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <label style="font-size:12px; letter-spacing:0.5px; color:rgba(245,245,247,0.5); font-weight:600;">LEISTUNG *</label>
+              <select required="{{ true }}" style="background:#08080a; border:1px solid rgba(245,245,247,0.12); border-radius:10px; padding:13px 16px; color:#f5f5f7; font-size:14px; font-family:inherit; outline:none;">
+                <option>Bitte wählen...</option>
+                <option>Hausmeisterservice</option>
+                <option>Fußbodenverlegung</option>
+                <option>Netzwerkverlegung</option>
+                <option>Silikonarbeiten</option>
+                <option>3D-Modelle</option>
+                <option>Sonstiges</option>
+              </select>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <label style="font-size:12px; letter-spacing:0.5px; color:rgba(245,245,247,0.5); font-weight:600;">NACHRICHT *</label>
+              <textarea required="{{ true }}" rows="4" style="background:#08080a; border:1px solid rgba(245,245,247,0.12); border-radius:10px; padding:13px 16px; color:#f5f5f7; font-size:14px; font-family:inherit; outline:none; resize:vertical; transition:border-color 0.25s ease;" style-focus="border-color:#ff8a3d;"></textarea>
+            </div>
+            <button type="submit" style="margin-top:8px; background:#ff8a3d; color:#0a0a0b; border:none; font-weight:700; font-size:14px; letter-spacing:0.5px; padding:16px; border-radius:12px; cursor:pointer; transition:all 0.3s ease;" style-hover="background:#ffffff; transform:translateY(-2px);">ANFRAGE SENDEN</button>
+          </form>
+        </sc-if>
+      </div>
+
+      <div id="contact-info-card" style="position:relative; z-index:{{ contactInfoZ }}; opacity:{{ contactOpacity }}; transform:{{ contactInfoTransform }}; box-shadow:{{ contactInfoShadow }}; display:flex; flex-direction:column; gap:14px; transition:opacity 0.2s linear, box-shadow 0.2s linear;">
+        <a href="tel:+491791611556" style="display:flex; flex-direction:column; gap:4px; background:#111113; border:1px solid rgba(245,245,247,0.08); border-radius:16px; padding:22px 26px; text-decoration:none; transition:border-color 0.3s ease;" style-hover="border-color:rgba(255,138,61,0.4);">
+          <span style="font-size:11px; letter-spacing:1px; color:rgba(245,245,247,0.4); font-weight:600;">TELEFON (HAUPT)</span>
+          <span style="font-size:17px; font-weight:700; color:#f5f5f7;">+49 179 1611556</span>
+        </a>
+        <a href="tel:+4917680644258" style="display:flex; flex-direction:column; gap:4px; background:#111113; border:1px solid rgba(245,245,247,0.08); border-radius:16px; padding:22px 26px; text-decoration:none; transition:border-color 0.3s ease;" style-hover="border-color:rgba(255,138,61,0.4);">
+          <span style="font-size:11px; letter-spacing:1px; color:rgba(245,245,247,0.4); font-weight:600;">TELEFON (ALT)</span>
+          <span style="font-size:17px; font-weight:700; color:#f5f5f7;">+49 176 80644258</span>
+        </a>
+        <a href="mailto:lelo.kontakt@gmail.com" style="display:flex; flex-direction:column; gap:4px; background:#111113; border:1px solid rgba(245,245,247,0.08); border-radius:16px; padding:22px 26px; text-decoration:none; transition:border-color 0.3s ease;" style-hover="border-color:rgba(255,138,61,0.4);">
+          <span style="font-size:11px; letter-spacing:1px; color:rgba(245,245,247,0.4); font-weight:600;">E-MAIL</span>
+          <span style="font-size:17px; font-weight:700; color:#f5f5f7;">lelo.kontakt@gmail.com</span>
+        </a>
+        <div style="background:#111113; border:1px solid rgba(245,245,247,0.08); border-radius:16px; padding:22px 26px;">
+          <span style="font-size:11px; letter-spacing:1px; color:rgba(245,245,247,0.4); font-weight:600;">ADRESSE</span>
+          <div style="font-size:15px; color:rgba(245,245,247,0.75); margin-top:6px; line-height:1.5;">Grüner Weg 14<br/>86685 Huisheim OT Gosheim</div>
+        </div>
+        <div style="background:linear-gradient(145deg,#ff9a52,#e8672a); border-radius:16px; padding:24px 26px; margin-top:6px;">
+          <div style="font-size:15px; font-weight:800; color:#0a0a0b; margin-bottom:6px;">Schnelle Antwort?</div>
+          <div style="font-size:13px; color:rgba(10,10,11,0.75); margin-bottom:16px; line-height:1.5;">Rufen Sie direkt an — ich bin meistens sofort erreichbar.</div>
+          <a href="tel:+491791611556" style="display:inline-block; background:#0a0a0b; color:#f5f5f7; text-decoration:none; font-weight:700; font-size:13px; padding:12px 22px; border-radius:100px; transition:transform 0.25s ease;" style-hover="transform:translateY(-2px);">JETZT ANRUFEN</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="border-top:1px solid rgba(245,245,247,0.08); padding:70px clamp(24px,6vw,90px) 40px; background:#0a0a0b;">
+    <div style="max-width:1400px; margin:0 auto; display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:50px; padding-bottom:50px;">
+      <div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:18px;">
+          <div style="width:34px; height:34px; border-radius:9px; background:linear-gradient(145deg,#ff9a52,#e8672a); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; color:#0a0a0b;">L</div>
+          <span style="font-weight:800; font-size:15px;">LELO</span>
+        </div>
+        <p style="font-size:14px; color:rgba(245,245,247,0.5); line-height:1.65; max-width:300px; margin:0 0 20px 0;">Meine Arbeit basiert auf Vertrauen, Zuverlässigkeit und Qualität. Ich begleite Sie persönlich von der ersten Beratung bis zur finalen Umsetzung.</p>
+        <div style="font-size:13.5px; color:rgba(245,245,247,0.6); line-height:1.8;">
+          <div>+49 179 1611556</div>
+          <div>lelo.kontakt@gmail.com</div>
+          <div>Grüner Weg 14, 86685 Huisheim OT Gosheim</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px; letter-spacing:1px; color:rgba(245,245,247,0.4); font-weight:700; margin-bottom:18px;">LEISTUNGEN</div>
+        <div style="display:flex; flex-direction:column; gap:11px;">
+          <a href="#leistungen" style="color:rgba(245,245,247,0.6); text-decoration:none; font-size:14px; transition:color 0.2s ease;" style-hover="color:#ff8a3d;">Hausmeisterservice</a>
+          <a href="#leistungen" style="color:rgba(245,245,247,0.6); text-decoration:none; font-size:14px; transition:color 0.2s ease;" style-hover="color:#ff8a3d;">Fußbodenverlegung</a>
+          <a href="#leistungen" style="color:rgba(245,245,247,0.6); text-decoration:none; font-size:14px; transition:color 0.2s ease;" style-hover="color:#ff8a3d;">Netzwerkverlegung</a>
+          <a href="#leistungen" style="color:rgba(245,245,247,0.6); text-decoration:none; font-size:14px; transition:color 0.2s ease;" style-hover="color:#ff8a3d;">Silikonarbeiten</a>
+          <a href="#leistungen" style="color:rgba(245,245,247,0.6); text-decoration:none; font-size:14px; transition:color 0.2s ease;" style-hover="color:#ff8a3d;">3D-Modelle</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px; letter-spacing:1px; color:rgba(245,245,247,0.4); font-weight:700; margin-bottom:18px;">NAVIGATION</div>
+        <div style="display:flex; flex-direction:column; gap:11px;">
+          <a href="#leistungen" style="color:rgba(245,245,247,0.6); text-decoration:none; font-size:14px; transition:color 0.2s ease;" style-hover="color:#ff8a3d;">Leistungen</a>
+          <a href="#ueber-mich" style="color:rgba(245,245,247,0.6); text-decoration:none; font-size:14px; transition:color 0.2s ease;" style-hover="color:#ff8a3d;">Über mich</a>
+          <a href="#faq" style="color:rgba(245,245,247,0.6); text-decoration:none; font-size:14px; transition:color 0.2s ease;" style-hover="color:#ff8a3d;">FAQ</a>
+          <a href="#kontakt" style="color:rgba(245,245,247,0.6); text-decoration:none; font-size:14px; transition:color 0.2s ease;" style-hover="color:#ff8a3d;">Kontakt</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px; letter-spacing:1px; color:rgba(245,245,247,0.4); font-weight:700; margin-bottom:18px;">RECHTLICHES</div>
+        <div style="display:flex; flex-direction:column; gap:11px;">
+          <a href="#" style="color:rgba(245,245,247,0.6); text-decoration:none; font-size:14px; transition:color 0.2s ease;" style-hover="color:#ff8a3d;">Impressum</a>
+          <a href="#" style="color:rgba(245,245,247,0.6); text-decoration:none; font-size:14px; transition:color 0.2s ease;" style-hover="color:#ff8a3d;">Datenschutz</a>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1400px; margin:0 auto; padding-top:28px; border-top:1px solid rgba(245,245,247,0.08); font-size:13px; color:rgba(245,245,247,0.35); text-align:center;">© 2026 LELO Dominik Lenz. Alle Rechte vorbehalten.</div>
+  </footer>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    scrollY: 0,
+    heroShown: false,
+    openFaq: 0,
+    formSubmitted: false,
+    p: {
+      services: 0, aboutImg: 0, aboutText: 0, cta: 0, faqHeader: 0, faqItems: 0, contact: 0,
+    },
+  };
+
+  progressFor(el, start, end) {
+    if (!el) return 0;
+    const rect = el.getBoundingClientRect();
+    const vh = window.innerHeight || 800;
+    const raw = (start * vh - rect.top) / ((start - end) * vh);
+    return Math.max(0, Math.min(1, raw));
+  }
+
+  updateProgress = () => {
+    this._ticking = false;
+    const services = document.getElementById('services-anchor');
+    const about = document.getElementById('ueber-mich');
+    const cta = document.querySelector('[data-screen-label="CTA"]');
+    const faqHeader = document.getElementById('faq-header');
+    const faqItems = document.getElementById('faq');
+    const contact = document.getElementById('kontakt');
+
+    this.setState({
+      scrollY: window.scrollY,
+      p: {
+        services: this.progressFor(services, 0.95, 0.4),
+        aboutImg: this.progressFor(about, 0.95, 0.35),
+        aboutText: this.progressFor(about, 0.9, 0.3),
+        cta: this.progressFor(cta, 0.95, 0.4),
+        faqHeader: this.progressFor(faqHeader, 0.95, 0.55),
+        faqItems: this.progressFor(faqItems, 0.95, 0.3),
+        contact: this.progressFor(contact, 1.05, 0.25),
+      },
+    });
+  };
+
+  componentDidMount() {
+    this._onScroll = () => {
+      if (this._ticking) return;
+      this._ticking = true;
+      requestAnimationFrame(this.updateProgress);
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    window.addEventListener('resize', this._onScroll, { passive: true });
+    requestAnimationFrame(() => setTimeout(() => this.setState({ heroShown: true }), 60));
+    setTimeout(this.updateProgress, 120);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('resize', this._onScroll);
+  }
+
+  scrollToTop = (e) => { if (e) e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+
+  submitForm = (e) => {
+    e.preventDefault();
+    this.setState({ formSubmitted: true });
+  };
+
+  renderVals() {
+    const scrolled = this.state.scrollY > 40;
+    const p = this.state.p;
+
+    const services = [
+      { title: 'HAUSMEISTERSERVICE', img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80' },
+      { title: 'FUSSBODENVERLEGUNG', img: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80' },
+      { title: 'NETZWERKVERLEGUNG', img: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&q=80' },
+      { title: 'SILIKONARBEITEN', img: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=600&q=80' },
+      { title: '3D-MODELLE', img: 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?auto=format&fit=crop&w=600&q=80' },
+    ].map((s, i) => {
+      const cp = Math.max(0, Math.min(1, (p.services - i * 0.1) * 1.8));
+      return { ...s, opacity: cp, cardTransform: `translateY(${(1 - cp) * 44}px)` };
+    });
+
+    const faqData = [
+      { q: 'In welchen Regionen sind Sie tätig?', a: 'Ich bin schwerpunktmäßig in Huisheim, Donauwörth, Nördlingen und Umgebung im Umkreis von ca. 30 km tätig.' },
+      { q: 'Wie schnell kann ich einen Termin bekommen?', a: 'Bei Notfällen bin ich oft noch am selben Tag vor Ort, für reguläre Anfragen meist innerhalb weniger Tage.' },
+      { q: 'Wie werden die Kosten berechnet?', a: 'Je nach Auftrag nach Aufwand oder zum transparenten Festpreis — Sie erhalten vorab immer einen klaren Kostenvoranschlag.' },
+      { q: 'Bieten Sie auch gewerbliche Dienstleistungen an?', a: 'Ja, ich betreue sowohl private Haushalte als auch Unternehmen und Gewerbeobjekte.' },
+      { q: 'Haben Sie eine Haftpflichtversicherung?', a: 'Ja, alle Arbeiten sind über eine gültige Betriebshaftpflichtversicherung abgesichert.' },
+      { q: 'Wie kontaktiere ich Sie am besten?', a: 'Für dringende Anliegen einfach anrufen, für alles andere gerne das Kontaktformular nutzen.' },
+    ].map((f, i) => {
+      const cp = Math.max(0, Math.min(1, (p.faqItems - i * 0.08) * 2));
+      return {
+        ...f,
+        toggle: () => this.setState((s) => ({ openFaq: s.openFaq === i ? -1 : i })),
+        rows: this.state.openFaq === i ? '1fr' : '0fr',
+        iconRotate: this.state.openFaq === i ? 'rotate(45deg)' : 'rotate(0deg)',
+        opacity: cp,
+        wrapTransform: `translateY(${(1 - cp) * 26}px)`,
+      };
+    });
+
+    const marqueeItems = ['Hausmeisterservice', 'Fußbodenverlegung', 'Netzwerkverlegung', 'Silikonarbeiten', '3D-Modelle', '24/7 Notdienst', 'Kostenlose Beratung'];
+
+    const contactShift = 1 - p.contact;
+    const contactInfoTransform = `translate(calc(${-100 * contactShift}% - ${70 * contactShift}px), ${contactShift * 18}px)`;
+    const contactInfoShadow = p.contact < 0.96 ? `0 ${30 + contactShift * 20}px ${60 + contactShift * 30}px rgba(0,0,0,${0.35 + contactShift * 0.25})` : '0 4px 20px rgba(0,0,0,0.15)';
+
+    return {
+      headerPadding: scrolled ? '14px clamp(24px,6vw,90px)' : '22px clamp(24px,6vw,90px)',
+      headerBg: scrolled ? 'rgba(24,20,18,0.72)' : 'rgba(8,8,10,0.15)',
+      headerBlur: scrolled ? 'blur(18px)' : 'blur(4px)',
+      headerBorder: scrolled ? 'rgba(255,138,61,0.15)' : 'rgba(245,245,247,0.0)',
+      scrollToTop: this.scrollToTop,
+      heroParallax: `translateY(${this.state.scrollY * 0.25}px)`,
+      heroVisible: this.state.heroShown ? 1 : 0,
+      heroTransform: this.state.heroShown ? 'translateY(0)' : 'translateY(24px)',
+      heroStats: [
+        { value: '24/7', label: 'NOTDIENST' },
+        { value: '5+', label: 'LEISTUNGEN' },
+        { value: '100%', label: 'QUALITÄT' },
+      ],
+      marqueeDouble: [...marqueeItems, ...marqueeItems],
+      services,
+      servicesHeaderOpacity: Math.max(0, Math.min(1, p.services * 2.2)),
+      servicesHeaderTransform: `translateY(${(1 - Math.max(0, Math.min(1, p.services * 2.2))) * 24}px)`,
+      aboutImgOpacity: p.aboutImg,
+      aboutImgTransform: `translateX(${(1 - p.aboutImg) * -70}px)`,
+      aboutTextOpacity: p.aboutText,
+      aboutTextTransform: `translateX(${(1 - p.aboutText) * 50}px)`,
+      aboutStats: [
+        { value: '5+', label: 'Leistungsbereiche' },
+        { value: '100%', label: 'Qualitätsgarantie' },
+        { value: '24/7', label: 'Notdienst' },
+        { value: 'Persönlich', label: 'Vor-Ort-Beratung' },
+      ],
+      ctaTextOpacity: p.cta,
+      ctaTextTransform: `translateX(${(1 - p.cta) * -60}px)`,
+      ctaImgOpacity: p.cta,
+      ctaImgTransform: `translateX(${(1 - p.cta) * 70}px)`,
+      faqHeaderOpacity: p.faqHeader,
+      faqHeaderTransform: `translateY(${(1 - p.faqHeader) * 26}px)`,
+      faqs: faqData,
+      contactOpacity: Math.max(0.001, p.contact > 0.02 ? 1 : p.contact * 40),
+      contactInfoTransform,
+      contactInfoShadow,
+      contactInfoZ: p.contact < 0.96 ? 5 : 1,
+      formSubmitted: this.state.formSubmitted,
+      formNotSubmitted: !this.state.formSubmitted,
+      submitForm: this.submitForm,
+    };
+  }
+}
+
+</script>
+</body>
+</html>

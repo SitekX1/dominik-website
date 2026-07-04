@@ -1,50 +1,45 @@
-"use client";
+const marqueeItems = [
+  "Hausmeisterservice",
+  "Fußbodenverlegung",
+  "Netzwerkverlegung",
+  "Silikonarbeiten",
+  "3D-Modelle",
+  "24/7 Notdienst",
+  "Kostenlose Beratung",
+];
 
-import { motion } from "framer-motion";
+const doubled = [...marqueeItems, ...marqueeItems];
 
-interface InfiniteTickerProps {
-  items: React.ReactNode[];
-  direction?: "left" | "right";
-  speed?: number;
-}
-
-export function InfiniteTicker({
-  items,
-  direction = "left",
-  speed = 25,
-}: InfiniteTickerProps) {
-  const duplicatedItems = [...items, ...items, ...items];
-  const xTranslation =
-    direction === "left" ? ["0%", "-33.33%"] : ["-33.33%", "0%"];
-
+export function InfiniteTicker() {
   return (
-    <div
-      className="w-full overflow-hidden relative flex py-6 bg-orange-600"
-      style={{
-        maskImage:
-          "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
-        WebkitMaskImage:
-          "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
-      }}
-    >
-      <motion.div
-        animate={{ x: xTranslation }}
-        transition={{
-          ease: "linear",
-          duration: speed,
-          repeat: Infinity,
-        }}
-        className="flex gap-10 whitespace-nowrap"
-      >
-        {duplicatedItems.map((item, idx) => (
-          <div
-            key={idx}
-            className="flex-shrink-0 flex items-center justify-center text-white font-semibold text-sm uppercase tracking-wider"
+    <div style={{
+      position: "relative",
+      background: "#111113",
+      borderTop: "1px solid rgba(245,245,247,0.08)",
+      borderBottom: "1px solid rgba(245,245,247,0.08)",
+      padding: "22px 0",
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+    }}>
+      <div style={{ display: "inline-flex", animation: "marqueeScroll 32s linear infinite" }}>
+        {doubled.map((item, i) => (
+          <span
+            key={i}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              fontSize: 15,
+              fontWeight: 600,
+              letterSpacing: "0.5px",
+              color: "rgba(245,245,247,0.55)",
+              padding: "0 28px",
+            }}
           >
             {item}
-          </div>
+            <span style={{ color: "#ff8a3d", marginLeft: 28 }}>•</span>
+          </span>
         ))}
-      </motion.div>
+      </div>
     </div>
   );
 }

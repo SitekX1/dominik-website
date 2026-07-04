@@ -1,34 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --dark:        #180A05;
-  --dark-card:   #241208;
-  --dark-border: rgba(255,255,255,0.08);
-  --cream:       #F8F4EE;
-  --cream-card:  #EDE5D8;
-  --gold:        #D4A017;
-  --gold-hover:  #B8880D;
-  --gold-light:  #E8C547;
-  --red-cta:     #E63312;
+  --bg:            #08080a;
+  --card:          #111113;
+  --card-alt:      #0e0e10;
+  --accent:        #ff8a3d;
+  --accent-light:  #ff9a52;
+  --accent-dark:   #e8672a;
+  --text-primary:  #f5f5f7;
+  --text-secondary: rgba(245,245,247,0.55);
+  --text-muted:    rgba(245,245,247,0.4);
+  --border:        rgba(245,245,247,0.08);
+  --border-med:    rgba(245,245,247,0.12);
+  --border-strong: rgba(245,245,247,0.18);
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-html { scroll-behavior: auto; } /* Lenis übernimmt */
+html {
+  scroll-behavior: smooth;
+}
 
 body {
-  background: var(--cream);
-  color: var(--dark);
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
-[id] { scroll-margin-top: 80px; }
+[id] {
+  scroll-margin-top: 80px;
+}
 
 /* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--dark); }
-::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255,138,61,0.4);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* ── Animations ── */
+
+@keyframes marqueeScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+
+@keyframes softPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,138,61,0.5); }
+  50%       { box-shadow: 0 0 0 10px rgba(255,138,61,0); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-float {
+  animation: floatY 3.5s ease-in-out infinite;
+}
+
+.animate-pulse-cta {
+  animation: softPulse 2.5s ease-in-out infinite;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* no-scrollbar util */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

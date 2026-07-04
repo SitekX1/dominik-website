@@ -1,130 +1,76 @@
-import Image from "next/image";
-import Link from "next/link";
-import { Phone, Mail, MapPin } from "lucide-react";
+"use client";
 
-const leistungen = [
-  "Hausmeisterservice",
-  "Fußbodenverlegung",
-  "Netzwerkverlegung",
-  "Silikonarbeiten",
-  "3D-Modelle",
-];
+import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="bg-[#0F0603] text-white/50">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+    <footer style={{ borderTop: "1px solid rgba(245,245,247,0.08)", padding: "70px clamp(24px,6vw,90px) 40px", background: "#0a0a0b" }}>
+      <div style={{ maxWidth: 1400, margin: "0 auto", display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr 1fr", gap: 50, paddingBottom: 50 }}>
 
-          {/* Col 1–2: Logo + Info */}
-          <div className="lg:col-span-2">
-            <div className="mb-6">
-              <Image
-                src="/logo.png"
-                alt="LELO Logo"
-                width={130}
-                height={52}
-                className="h-12 w-auto object-contain brightness-0 invert"
-              />
-            </div>
-            <p className="text-white/40 text-sm leading-relaxed mb-8 max-w-sm">
-              Meine Arbeit basiert auf Vertrauen, Zuverlässigkeit und Qualität.
-              Ich begleite Sie persönlich von der ersten Beratung bis zur finalen Umsetzung.
-            </p>
-            <div className="flex flex-col gap-3">
-              <a href="tel:+491791611556"
-                className="flex items-center gap-3 text-sm text-white/40 hover:text-[#D4A017] transition-colors">
-                <Phone size={14} className="text-[#D4A017]" />
-                +49 179 1611556
-              </a>
-              <a href="mailto:lelo.kontakt@gmail.com"
-                className="flex items-center gap-3 text-sm text-white/40 hover:text-[#D4A017] transition-colors">
-                <Mail size={14} className="text-[#D4A017]" />
-                lelo.kontakt@gmail.com
-              </a>
-              <div className="flex items-start gap-3 text-sm text-white/40">
-                <MapPin size={14} className="text-[#D4A017] mt-0.5 flex-shrink-0" />
-                <span>Grüner Weg 14, 86685 Huisheim OT Gosheim</span>
-              </div>
-            </div>
+        {/* Brand */}
+        <div>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 18 }}>
+            <div style={{ width: 34, height: 34, borderRadius: 9, background: "linear-gradient(145deg,#ff9a52,#e8672a)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 14, color: "#0a0a0b" }}>L</div>
+            <span style={{ fontWeight: 800, fontSize: 15, color: "#f5f5f7" }}>LELO</span>
           </div>
-
-          {/* Col 3: Leistungen */}
-          <div>
-            <h4 className="text-white font-black text-xs uppercase tracking-widest mb-6">
-              Leistungen
-            </h4>
-            <ul className="flex flex-col gap-3">
-              {leistungen.map((item) => (
-                <li key={item}>
-                  <a href="#leistungen"
-                    className="text-sm text-white/40 hover:text-[#D4A017] transition-colors">
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Col 4: Navigation + Rechtliches */}
-          <div>
-            <h4 className="text-white font-black text-xs uppercase tracking-widest mb-6">
-              Navigation
-            </h4>
-            <ul className="flex flex-col gap-3 mb-8">
-              {[
-                { label: "Leistungen", href: "#leistungen" },
-                { label: "Über mich", href: "#ueber-mich" },
-                { label: "FAQ", href: "#faq" },
-                { label: "Kontakt", href: "#kontakt" },
-              ].map((link) => (
-                <li key={link.href}>
-                  <a href={link.href}
-                    className="text-sm text-white/40 hover:text-[#D4A017] transition-colors">
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-
-            <h4 className="text-white font-black text-xs uppercase tracking-widest mb-4">
-              Rechtliches
-            </h4>
-            <ul className="flex flex-col gap-3">
-              <li>
-                <Link href="/impressum"
-                  className="text-sm text-white/40 hover:text-[#D4A017] transition-colors">
-                  Impressum
-                </Link>
-              </li>
-              <li>
-                <Link href="/datenschutz"
-                  className="text-sm text-white/40 hover:text-[#D4A017] transition-colors">
-                  Datenschutz
-                </Link>
-              </li>
-            </ul>
+          <p style={{ fontSize: 14, color: "rgba(245,245,247,0.5)", lineHeight: 1.65, maxWidth: 300, margin: "0 0 20px 0" }}>
+            Meine Arbeit basiert auf Vertrauen, Zuverlässigkeit und Qualität. Ich begleite Sie persönlich von der ersten Beratung bis zur finalen Umsetzung.
+          </p>
+          <div style={{ fontSize: 13.5, color: "rgba(245,245,247,0.6)", lineHeight: 1.8 }}>
+            <div>+49 179 1611556</div>
+            <div>lelo.kontakt@gmail.com</div>
+            <div>Grüner Weg 14, 86685 Huisheim OT Gosheim</div>
           </div>
         </div>
-      </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-white/[0.06]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-white/20">
-            © {new Date().getFullYear()} LELO Dominik Lenz. Alle Rechte vorbehalten.
-          </p>
-          <div className="flex items-center gap-4">
-            <Link href="/impressum"
-              className="text-xs text-white/20 hover:text-white/50 transition-colors">
+        {/* Leistungen */}
+        <div>
+          <div style={{ fontSize: 12, letterSpacing: "1px", color: "rgba(245,245,247,0.4)", fontWeight: 700, marginBottom: 18 }}>LEISTUNGEN</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 11 }}>
+            {["Hausmeisterservice", "Fußbodenverlegung", "Netzwerkverlegung", "Silikonarbeiten", "3D-Modelle"].map((item) => (
+              <a key={item} href="#leistungen" style={{ color: "rgba(245,245,247,0.6)", textDecoration: "none", fontSize: 14, transition: "color 0.2s ease" }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "#ff8a3d")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(245,245,247,0.6)")}>
+                {item}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Navigation */}
+        <div>
+          <div style={{ fontSize: 12, letterSpacing: "1px", color: "rgba(245,245,247,0.4)", fontWeight: 700, marginBottom: 18 }}>NAVIGATION</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 11 }}>
+            {[{ label: "Leistungen", href: "#leistungen" }, { label: "Über mich", href: "#ueber-mich" }, { label: "FAQ", href: "#faq" }, { label: "Kontakt", href: "#kontakt" }].map((link) => (
+              <a key={link.href} href={link.href} style={{ color: "rgba(245,245,247,0.6)", textDecoration: "none", fontSize: 14, transition: "color 0.2s ease" }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "#ff8a3d")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(245,245,247,0.6)")}>
+                {link.label}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Rechtliches */}
+        <div>
+          <div style={{ fontSize: 12, letterSpacing: "1px", color: "rgba(245,245,247,0.4)", fontWeight: 700, marginBottom: 18 }}>RECHTLICHES</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 11 }}>
+            <Link href="/impressum" style={{ color: "rgba(245,245,247,0.6)", textDecoration: "none", fontSize: 14, transition: "color 0.2s ease" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#ff8a3d")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(245,245,247,0.6)")}>
               Impressum
             </Link>
-            <Link href="/datenschutz"
-              className="text-xs text-white/20 hover:text-white/50 transition-colors">
+            <Link href="/datenschutz" style={{ color: "rgba(245,245,247,0.6)", textDecoration: "none", fontSize: 14, transition: "color 0.2s ease" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#ff8a3d")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(245,245,247,0.6)")}>
               Datenschutz
             </Link>
           </div>
         </div>
+      </div>
+
+      <div style={{ maxWidth: 1400, margin: "0 auto", paddingTop: 28, borderTop: "1px solid rgba(245,245,247,0.08)", fontSize: 13, color: "rgba(245,245,247,0.35)", textAlign: "center" }}>
+        © {new Date().getFullYear()} LELO Dominik Lenz. Alle Rechte vorbehalten.
       </div>
     </footer>
   );

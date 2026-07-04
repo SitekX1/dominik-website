@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { LenisProvider } from "@/components/layout/LenisProvider";
 
 export const metadata: Metadata = {
-  title: "Dominik Website",
-  description: "Offizielle Website",
+  title: "LELO – Dominik Lenz | Handwerker",
+  description:
+    "Professioneller Hausmeisterservice, Fußbodenverlegung, Netzwerkverlegung, Silikonarbeiten und 3D-Modelle im Raum Donau-Ries. 24/7 erreichbar.",
 };
 
 export default function RootLayout({
@@ -14,9 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="de">
-      <body>
-        <LenisProvider>{children}</LenisProvider>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
